@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./about_us.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Flare-shop.kz</title>
+</head>
+<body>
+    <section class="sub-header">
+        <nav>
+            <a href="/index.html"><img src="/pictures/mini-logo.jpg"></a>
+            <div class="nav-links" id="navlinks">
+                <i class="fa fa-times" onclick="hideMenu()"></i>
+
+                <ul>
+                    <li><a href="/index.html" class="change">Главная</a></li>
+                    <li><a href="/about_us/about_us.html" class="change"> О Нас</a></li>
+                    <li><a href="/range/range.html" class="change">Ассортимент</a></li>
+                    <li><a href="./about_us.html" class="change">Связаться с Нами</a></li>
+                </ul>
+            </div>
+            <i class="fa fa-bars" onclick="showMenu()"></i>
+        </nav>
+        <h1>О Нас</h1>
+    </section>
+
+
+    <!---------- О Нас контент-->
+    <section class="about-us">
+    <div class="row">
+        <div class="about-col">
+            <h1>Добро пожаловать в Наш магазин футболок!</h1>
+            <p>"Добро пожаловать в Наш мир футболок! Мы - команда энтузиастов, преданных культуре уличной моды и самовыражению через стиль. В Нашем магазине Вы найдете уникальные дизайны, отражающие разнообразие интересов и личности каждого. Наша миссия - не просто продавать одежду, а помогать Вам выразить свою индивидуальность через моду. Мы стремимся к качеству, стилю и удобству, чтобы Ваша покупка стала приятным и запоминающимся опытом. Присоединяйтесь к нашему сообществу и дайте миру увидеть Ваш стиль!"</p>
+        <a href="/range/range.html" class="btn red-btn reveal">Изучить</a>
+        </div>
+            <div class="about-col">
+                <img src="/pictures/tshirt pic.webp">
+            </div>
+        </div>
+    </section>
+
+
+    <!------конец сайта, о нас в соцсетях-->
+<section class="footer">
+    <h4>О Нас</h4>
+    <p>Наша Команда Только Начинает Свою Работу<br>Вот где нас можно найти</p>
+<div class="icons">
+    <i class="fa fa-instagram"></i>
+    <i class="fa fa-whatsapp"></i>
+</div>
+<p>Made with <i class="fa fa-heart"></i> by Flare-Shop</p>
+</section>
+
+
+<!----java-->
+    <script>
+        var navlinks = document.getElementById("navlinks");
+        function showMenu(){
+            navlinks.style.right = "0";
+        }
+        function hideMenu(){
+            navlinks.style.right = "-200px";
+        }   
+    </script>
+    
+</body>
+</html>
+
+
+<!-------JAVA для всплытия текста у колонки -->
+<script type="text/javascript">
+    window.addEventListener('scroll',reveal);
+
+    function reveal(){
+        var reveals = document.querySelectorAll('.reveal');
+
+        for(var i=0; i < reveals.length; i++){
+            var windowheight = window.innerHeight;
+            var revealtop = reveals[i].getBoundingClientRect().top;
+            var revealpoint = 150;
+
+            if(revealtop < windowheight - revealpoint){
+                reveals[i].classList.add('active');
+            }
+            else{
+                reveals[i].classList.remove('active');
+            }
+        }
+    }
+
+</script>

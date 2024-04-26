@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Flare-shop.kz</title>
+</head>
+<body>
+    <section class="header">
+        <nav>
+            <a href="index.html"><img src="./pictures/mini-logo.jpg"></a>
+            <div class="nav-links" id="navlinks">
+                <i class="fa fa-times" onclick="hideMenu()"></i>
+
+                <ul class="smooth-scroll">
+                    <li><a href="./index.html" class="change">Главная</a></li>
+                    <li><a href="./about_us/about_us.html" class="change"> О Нас</a></li>
+                    <li><a href="./range/range.html" class="change">Ассортимент</a></li>
+                    <li><a href="./contact_us/contact_us.html" class="change">Связаться с Нами</a></li> 
+                </ul>   
+            </div>
+            <i class="fa fa-bars" onclick="showMenu()"></i>
+        </nav>
+
+        <div class="text-box">
+            <h1>Flare-shop</h1>
+            <p>"Наш магазин футболок — место, 
+            где каждая нить рассказывает свою историю,<br>
+            а каждый клиент создает свой уникальный облик."</p>
+        </div>
+
+    </section>
+
+<!----------предложения-->
+<section class="offer reveal ">
+<h1>Что мы предлагаем</h1>
+<p>Мы стремимся к постоянному совершенствованию</p>
+
+<div class="row reveal">
+    <div class="offer-column ">
+        <h3>Уникальность</h3>
+        <p>
+            Мы предоставляем уникальный ассортимент стильных футболок, объединяющих выдающийся дизайн и высокое качество материалов.
+        </p>
+    </div>
+<div class="offer-column ">
+    <h3>Удобство</h3>
+<p>
+    Представьте себе невероятное сочетание стиля и удобства - именно это вы найдете в каждой футболке нашего магазина.
+</p>
+</div>
+<div class="offer-column">
+<h3>Индивидуальность</h3>
+<p>
+    В магазине футболок, где ценится индивидуальность, мы предлагаем широкий выбор уникальных дизайнов, чтобы каждый клиент мог найти свой неповторимый стиль.
+</p>
+    </div>
+
+
+</section>
+<!-----местонахождение-->
+<section class="place reveal">
+    <h1>Где мы находимся?</h1>
+    <div class="row reveal">
+        <div class="place-column">
+            <img src="./pictures/baiter.jpg"/>
+            <div class="layer">
+                <h3>ASTANA</h3>
+            </div>
+        </div>
+    </div>
+
+
+</section>
+
+<!----------отзыв-->
+
+<section class="review reveal">
+    <h3>Отзыв</h3>
+
+    <div class="row">
+        <div class="review-columns">
+            <div>
+                <p>
+                    В мире бизнеса успешность подобна хорошей футболке - она комфортна, привлекательна и создает неповторимый стиль."
+                </p>
+                <h3> - Неизвестный писатель</h3>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
+            </div>
+        </div>
+            <div class="review-columns">
+                <div>
+                    <p>
+                        "Мои лучшие идеи приходят мне в голову, когда я одет в свою любимую футболку." 
+                    </p>
+                    <h3> - Неподтвержденный Гений</h3>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-half-o"></i>
+                </div>
+    </div>
+</section>
+
+<button id="scrollToTopBtn" title="GoToTop">
+    ↑
+</button>
+
+
+<script>  
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    document.getElementById("scrollToTopBtn").style.display = "block";
+  } else {
+    document.getElementById("scrollToTopBtn").style.display = "none";
+  }
+}
+
+// При нажатии на кнопку, прокручиваем страницу вверх
+document.getElementById("scrollToTopBtn").addEventListener("click", function() {
+  document.body.scrollTop = 0; // Для Safari
+  document.documentElement.scrollTop = 0; // Для других браузеров
+});
+</script>
+
+<!----java-->
+    <script>
+        var navlinks = document.getElementById("navlinks");
+        function showMenu(){
+            navlinks.style.right = "0";
+        }
+        function hideMenu(){
+            navlinks.style.right = "-200px";
+        }   
+    </script>
+    
+</body>
+</html>
+
+
+
+<!-------оставить заявку-->
+
+<section class="cta reveal">
+    <h1>Вы Можете Связаться с Нами<br>Оставив Онлайн Заявку </h1>
+    <a href="/contact_us/contact_us.html" class="btn">Связаться с Нами</a>
+
+</section>
+
+
+<!------конец сайта, о нас в соцсетях-->
+<section class="footer">
+    <h4>О Нас</h4>
+    <p>Наша Команда Только Начинает Свою Работу<br>Вот где нас можно найти</p>
+<div class="icons">
+    <i class="fa fa-instagram"></i>
+    <i class="fa fa-whatsapp"></i>
+</div>
+<p>Made with <i class="fa fa-heart"></i> by Flare-Shop</p>
+</section>
+
+<!-------JAVA для всплытия текста у колонки -->
+<script type="text/javascript">
+    window.addEventListener('scroll',reveal);
+
+    function reveal(){
+        var reveals = document.querySelectorAll('.reveal');
+
+        for(var i=0; i < reveals.length; i++){
+            var windowheight = window.innerHeight;
+            var revealtop = reveals[i].getBoundingClientRect().top;
+            var revealpoint = 150;
+
+            if(revealtop < windowheight - revealpoint){
+                reveals[i].classList.add('active');
+            }
+            else{
+                reveals[i].classList.remove('active');
+            }
+        }
+    }
+
+</script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.4.min.js"></script>

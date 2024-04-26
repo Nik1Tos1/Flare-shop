@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./contact_us.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Flare-shop.kz</title>
+
+</head>
+<body>
+    <section class="sub-header">
+        <nav>
+            <a href="/index.html"><img src="/pictures/mini-logo.jpg"></a>
+            <div class="nav-links" id="navlinks">
+                <i class="fa fa-times" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="/index.html" class="change">Главная</a></li>
+                    <li><a href="/about_us/about_us.html" class="change"> О Нас</a></li>
+                    <li><a href="/range/range.html" class="change">Ассортимент</a></li>
+                    <li><a href="/contact_us/contact_us.html" class="change">Связаться с Нами</a></li>
+                </ul>
+            </div>
+            <i class="fa fa-bars" onclick="showMenu()"></i>
+        </nav>
+        <h1>Связаться с Нами</h1>
+    </section>
+
+
+<!---------contact information-->
+<section class="contact-us">
+    <div class="row">
+        <div class="contact-col">
+            <div>
+                <i class="fa fa-home"></i>
+                <span>
+                    <h5>Astana,Kazakhstan</h5>
+                    <p>Наше местоположение</p>
+                </span>
+            </div>
+                <div>
+                    <i class="fa fa-phone"></i>
+                    <span>
+                        <h5>+7 771 376 77 55</h5>
+                        <p> Вы можете писать на whatsapp c Понедельника по Пятницу, чтобы связаться с нами</p>
+                    </span>
+                </div>
+                    <div>
+                        <i class="fa fa-envelope-o"></i>
+                        <span>
+                            <h5>flare.shopkz@gmail.com</h5>
+                            <p>Вы можете написать сюда, чтобы связаться с нами</p>
+                        </span>
+                    </div>
+                </div>
+<div class="contact-col">
+    <p>(При оставлении заявки, товар который вы добавили в корзину, автоматически будет отправлен вместе с заявкой)</p>
+    <form method="post">
+        <input type="text" id="name" name="name" placeholder="Введите Ваше имя" required>
+        <input type="text" id="email"  name="email" placeholder="Введите Вашу почту" required>
+        <input type="text" id="phone"  name="phone" placeholder="Введите Ваш телефон" required>
+        <input type="text"id="subject" name="subject" placeholder="Введите Вашу тему" required>
+        <textarea rows="8" id="message" name="message" placeholder="Сообщение" required></textarea>
+        <button type="submit" class="btn red-btn">Отправить Сообщение</button>
+</form>
+        
+</div>
+</div>
+    </div>
+
+</section>
+
+<!---------отправление смс на почту-->
+<script src="https://smtpjs.com/v3/smtp.js"></script>
+<script src="./script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+
+    
+<!----java-->
+    <script>
+        var navlinks = document.getElementById("navlinks");
+        function showMenu(){
+            navlinks.style.right = "0";
+        }
+        function hideMenu(){
+            navlinks.style.right = "-200px";
+        }   
+    </script>
+    
+</body>
+</html>
+
+
+<!------конец сайта, о нас в соцсетях-->
+<section class="footer">
+    <h4>О Нас</h4>
+    <p>Наша Команда Только Начинает Свою Работу<br>Вот где нас можно найти</p>
+<div class="icons">
+    <i class="fa fa-instagram"></i>
+    <i class="fa fa-whatsapp"></i>
+</div>
+<p>Made with <i class="fa fa-heart"></i> by Flare-Shop</p>
+</section>
+
+
+<!-------JAVA для всплытия текста у колонки -->
+<script type="text/javascript">
+    window.addEventListener('scroll',reveal);
+
+    function reveal(){
+        var reveals = document.querySelectorAll('.reveal');
+
+        for(var i=0; i < reveals.length; i++){
+            var windowheight = window.innerHeight;
+            var revealtop = reveals[i].getBoundingClientRect().top;
+            var revealpoint = 150;
+
+            if(revealtop < windowheight - revealpoint){
+                reveals[i].classList.add('active');
+            }
+            else{
+                reveals[i].classList.remove('active');
+            }
+        }
+    }
+</script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
