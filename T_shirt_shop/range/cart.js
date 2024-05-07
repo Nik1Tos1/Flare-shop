@@ -56,6 +56,11 @@ function ready() {
     });
 }
 
+// Функция для генерации уникального идентификатора товара
+function generateItemId(title, size, productImg) {
+    return title.toLowerCase() + '-' + size.toLowerCase() + '-' + productImg.toLowerCase();
+}
+
 // Добавить в корзину
 function addCartClicked(event) {
     var button = event.target;
@@ -66,20 +71,30 @@ function addCartClicked(event) {
     var sizeElement = shopProducts.querySelector(".size"); // Получаем контейнер с размерами
     var size = sizeElement.querySelector("span.selected").innerText.toLowerCase(); // Получаем выбранный размер
 
-    // Генерируем уникальный идентификатор для товара с учетом его названия и размера
-    var itemId = title + '-' + size;
+    // Генерируем уникальный идентификатор для товара
+    var itemId = generateItemId(title, size, productImg);
 
-    // Проверяем, добавлен ли уже товар с таким же идентификатором в корзину
+    // Если товар с таким же идентификатором уже есть в корзине, увеличиваем его количество
     if (cartItemsTracker[itemId]) {
-        alert("Этот товар уже добавлен в корзину с выбранным размером!");
-        return; // Прерываем выполнение функции, чтобы не добавлять товар еще раз
+        cartItemsTracker[itemId].quantity++; // Увеличиваем количество товара
+        updateCartItemQuantity(itemId, cartItemsTracker[itemId].quantity); // Обновляем количество товара в корзине
+    } else {
+        // Если товара еще нет в корзине, добавляем его
+        addProductToCart(title, price, productImg, size, 1); // Устанавливаем начальное количество 1
+        // Сохраняем информацию о товаре в объект отслеживания
+        cartItemsTracker[itemId] = {
+            quantity: 1
+        };
     }
+}
 
-    // Добавляем товар в объект отслеживания
-    cartItemsTracker[itemId] = true;
-
-    // Если товара еще нет в корзине с выбранным размером, добавляем его
-    addProductToCart(title, price, productImg, size, 1); // Устанавливаем начальное количество 1
+// Обновить количество товара в корзине
+function updateCartItemQuantity(itemId, quantity) {
+    // Находим элемент корзины с соответствующим идентификатором и обновляем его количество
+    var cartItemElement = document.querySelector(`.cart-content [data-item-id="${itemId}"]`);
+    var quantityElement = cartItemElement.querySelector(".cart-quantity");
+    quantityElement.value = quantity;
+    updateTotal(); // Обновляем общую сумму после изменения количества товара
 }
 
 // Удаление предмета из корзины
@@ -88,9 +103,12 @@ function removeCartItem(event) {
     var itemBox = buttonClicked.parentElement;
     var title = itemBox.querySelector(".cart-product-title").innerText.toLowerCase();
     var size = itemBox.querySelector(".cart-product-size").innerText.toLowerCase();
+    var productImg = itemBox.querySelector(".cart-img").src.toLowerCase();
+
+    // Генерируем уникальный идентификатор для товара
+    var itemId = generateItemId(title, size, productImg);
 
     // Удаляем товар из объекта отслеживания
-    var itemId = title + '-' + size;
     delete cartItemsTracker[itemId];
 
     itemBox.remove();
@@ -178,6 +196,7 @@ function addProductToCart(title, price, productImg, size, quantity) {
 
     var cartBox = document.createElement("div");
     cartBox.classList.add("cart-box");
+    cartBox.setAttribute("data-item-id", generateItemId(title, size, productImg)); // Устанавливаем атрибут с уникальным идентификатором товара
 
     var cartBoxContent = `
         <img src="${productImg}" alt="" class="cart-img">
