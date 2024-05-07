@@ -3,6 +3,9 @@ let cartIcon = document.querySelector("#cart-icon");
 let cart = document.querySelector(".cart");
 let closeCart = document.querySelector("#close-cart");
 
+// Объект для отслеживания добавленных в корзину товаров
+var cartItemsTracker = {};
+
 // Открыть корзину и загрузить содержимое из localStorage
 cartIcon.onclick = () => {
     cart.classList.add("active");
@@ -35,17 +38,17 @@ function ready() {
     }
 
     // Добавить в корзину
-    var addCart = document.querySelectorAll(".cart_bin");
-    addCart.forEach(function(button) {
+    var addCart = document.getElementsByClassName("cart_bin");
+    for (var i = 0; i < addCart.length; i++) {
+        var button = addCart[i];
         button.addEventListener("click", addCartClicked);
-    });
+    }
 
     // Обработка выбора размера
     var sizeOptions = document.querySelectorAll(".size span");
     sizeOptions.forEach(function(option) {
         option.addEventListener("click", function() {
-            // Убираем класс selected только с текущего выбранного размера
-            this.parentNode.querySelectorAll('.size span').forEach(function(opt) {
+            sizeOptions.forEach(function(opt) {
                 opt.classList.remove("selected");
             });
             this.classList.add("selected");
@@ -53,15 +56,7 @@ function ready() {
     });
 }
 
-// Удаление предмета из корзины
-function removeCartItem(event) {
-    var buttonClicked = event.target;
-    buttonClicked.parentElement.remove();
-    updateTotal();
-    saveCartToLocalStorage(); // Сохраняем содержимое корзины после удаления товара
-}
-
-// Добавление в корзину
+// Добавить в корзину
 function addCartClicked(event) {
     var button = event.target;
     var shopProducts = button.parentElement;
@@ -69,58 +64,38 @@ function addCartClicked(event) {
     var price = shopProducts.querySelector(".price").innerText.toLowerCase();
     var productImg = shopProducts.querySelector(".product-img").src.toLowerCase();
     var sizeElement = shopProducts.querySelector(".size"); // Получаем контейнер с размерами
-    var size = sizeElement.querySelector("span.selected").innerText; // Получаем выбранный размер
+    var size = sizeElement.querySelector("span.selected").innerText.toLowerCase(); // Получаем выбранный размер
 
-    // Если размер не выбран, предупредить пользователя и прервать выполнение функции
-    if (!size) {
-        alert("Пожалуйста, выберите размер товара.");
-        return;
+    // Генерируем уникальный идентификатор для товара с учетом его названия и размера
+    var itemId = title + '-' + size;
+
+    // Проверяем, добавлен ли уже товар с таким же идентификатором в корзину
+    if (cartItemsTracker[itemId]) {
+        alert("Этот товар уже добавлен в корзину с выбранным размером!");
+        return; // Прерываем выполнение функции, чтобы не добавлять товар еще раз
     }
 
-    // Проверяем, есть ли уже такой товар в корзине с таким же размером и названием
-    var cartItems = document.querySelectorAll(".cart-content .cart-box");
-    for (var i = 0; i < cartItems.length; i++) {
-        var cartTitle = cartItems[i].querySelector(".cart-product-title").innerText.toLowerCase();
-        var cartPrice = cartItems[i].querySelector(".cart-price").innerText.toLowerCase();
-        var cartImg = cartItems[i].querySelector(".cart-img").src.toLowerCase();
-        var cartSize = cartItems[i].querySelector(".cart-product-size").innerText.toLowerCase();
+    // Добавляем товар в объект отслеживания
+    cartItemsTracker[itemId] = true;
 
-        if (cartTitle === title && cartPrice === price && cartImg === productImg && cartSize === size) {
-            alert("Этот товар уже добавлен в корзину с выбранным размером!");
-            return; // Прерываем выполнение функции, чтобы не добавлять товар еще раз
-        }
-    }
-
-    // Если товара еще нет в корзине с выбранным размером и названием, добавляем его
+    // Если товара еще нет в корзине с выбранным размером, добавляем его
     addProductToCart(title, price, productImg, size, 1); // Устанавливаем начальное количество 1
 }
 
-// Добавление товара в корзину
-function addProductToCart(title, price, productImg, size, quantity) {
-    var cartItems = document.querySelector(".cart-content");
-    var cartShopBox = document.createElement("div");
-    cartShopBox.classList.add("cart-box");
+// Удаление предмета из корзины
+function removeCartItem(event) {
+    var buttonClicked = event.target;
+    var itemBox = buttonClicked.parentElement;
+    var title = itemBox.querySelector(".cart-product-title").innerText.toLowerCase();
+    var size = itemBox.querySelector(".cart-product-size").innerText.toLowerCase();
 
-    var cartBoxContent = `
-        <img src="${productImg}" alt="" class="cart-img">
-        <div class="detail-box">
-            <div class="cart-product-title">${title}</div>
-            <div class="cart-product-size">${size}</div>
-            <div class="cart-price">${price}</div>
-            <input type="number" value="${quantity}" class="cart-quantity">
-        </div>
-        <i class="bx bxs-trash-alt bx-sm cart-remove"></i>`;
+    // Удаляем товар из объекта отслеживания
+    var itemId = title + '-' + size;
+    delete cartItemsTracker[itemId];
 
-    cartShopBox.innerHTML = cartBoxContent;
-    cartItems.appendChild(cartShopBox);
-
-    // Сохранение содержимого корзины в localStorage при добавлении товара
-    saveCartToLocalStorage();
-    // Убедимся, что обновляем общую сумму после добавления товара
+    itemBox.remove();
     updateTotal();
-
-    cartShopBox.querySelector(".cart-remove").addEventListener("click", removeCartItem);
-    cartShopBox.querySelector(".cart-quantity").addEventListener("change", quantityChanged);
+    saveCartToLocalStorage(); // Сохраняем содержимое корзины после удаления товара
 }
 
 // Обновление цены
@@ -195,6 +170,36 @@ function loadCartFromLocalStorage() {
 function clearCart() {
     var cartContent = document.querySelector(".cart-content");
     cartContent.innerHTML = "";
+}
+
+// Добавить товар в корзину
+function addProductToCart(title, price, productImg, size, quantity) {
+    var cartContent = document.querySelector(".cart-content");
+
+    var cartBox = document.createElement("div");
+    cartBox.classList.add("cart-box");
+
+    var cartBoxContent = `
+        <img src="${productImg}" alt="" class="cart-img">
+        <div class="detail-box">
+            <div class="cart-product-title">${title}</div>
+            <div class="cart-product-size">${size}</div>
+            <div class="cart-price">${price}</div>
+            <input type="number" value="${quantity}" class="cart-quantity">
+        </div>
+        <i class="bx bxs-trash-alt bx-sm cart-remove"></i>`;
+    
+    cartBox.innerHTML = cartBoxContent;
+
+    cartContent.appendChild(cartBox);
+
+    updateTotal(); // Обновляем общую сумму при добавлении товара
+
+    // Прикрепляем обработчик события для кнопки удаления товара
+    cartBox.querySelector(".cart-remove").addEventListener("click", removeCartItem);
+
+    // Прикрепляем обработчик события для поля количества товара
+    cartBox.querySelector(".cart-quantity").addEventListener("change", quantityChanged);
 }
 
 // Работа с корзиной
